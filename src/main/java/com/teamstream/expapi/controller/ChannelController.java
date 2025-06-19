@@ -3,6 +3,7 @@ package com.teamstream.expapi.controller;
 import com.teamstream.expapi.dto.ChannelRequest;
 import com.teamstream.expapi.dto.ChannelResponse;
 import com.teamstream.expapi.dto.ErrorResponse;
+import com.teamstream.expapi.dto.TokenRefreshRequest;
 import com.teamstream.expapi.service.AgoraChannelService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -105,14 +106,59 @@ public class ChannelController {
         Map<String, Object> info = new HashMap<>();
         info.put("service", "TeamStream Experience API");
         info.put("version", "1.0.0");
-        info.put("description", "Agora SDK integration for live streaming");
+        info.put("description", "Agora SDK integration for live streaming with team management");
+        info.put("features", Map.of(
+            "token_generation", "Secure Agora RTC token generation",
+            "team_management", "Basketball team and game information",
+            "stream_configuration", "Camera switching, recording, and quality settings",
+            "token_refresh", "Token renewal for long-running streams"
+        ));
         info.put("endpoints", Map.of(
             "POST /channel/create", "Create a new channel and generate token",
+            "POST /channel/refresh-token", "Refresh an existing token",
             "GET /channel/health", "Service health check",
             "GET /channel/info", "Service information"
         ));
         
         return ResponseEntity.ok(info);
+    }
+
+    /**
+     * Refresh token for an existing channel
+     * POST /api/v1/channel/refresh-token
+     */
+    @PostMapping("/refresh-token")
+    public ResponseEntity<?> refreshToken(@Valid @RequestBody TokenRefreshRequest request, 
+                                        BindingResult bindingResult) {
+        
+        logger.info("Received token refresh request for channel: {}", request.getChannelName());
+
+        // Validate request
+        if (bindingResult.hasErrors()) {
+            Map<String, String> errors = new HashMap<>();
+            bindingResult.getFieldErrors().forEach(error -> 
+                errors.put(error.getField(), error.getDefaultMessage())
+            );
+            
+            return ResponseEntity.badRequest()
+                .body(new ErrorResponse("Validation Error", 
+                                      "Invalid request parameters: " + errors, 
+                                      HttpStatus.BAD_REQUEST.value()));
+        }
+
+        try {
+            ChannelResponse response = agoraChannelService.refreshToken(request);
+            logger.info("Successfully refreshed token for channel: {}", request.getChannelName());
+            
+            return ResponseEntity.ok(response);
+            
+        } catch (Exception e) {
+            logger.error("Failed to refresh token for channel: {}", request.getChannelName(), e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ErrorResponse("Token Refresh Error", 
+                                      e.getMessage(), 
+                                      HttpStatus.INTERNAL_SERVER_ERROR.value()));
+        }
     }
 
     /**
