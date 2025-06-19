@@ -1,0 +1,41 @@
+# Render.com deployment configuration
+# Place this file in your repository root as render.yaml
+
+services:
+  - type: web
+    name: teamstream-experience-api
+    env: docker
+    dockerfilePath: ./Dockerfile
+    plan: starter  # You can upgrade to standard or pro as needed
+    region: oregon  # Choose your preferred region
+    branch: main
+    buildCommand: ""  # Docker builds handle this
+    startCommand: ""  # Dockerfile handles this
+    
+    # Environment Variables
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: JAVA_OPTS
+        value: "-Xmx512m -Xms256m"
+      - key: AGORA_APP_ID
+        value: a111a0c2193f4ecaa04d6e74190f082d
+      - key: AGORA_APP_CERTIFICATE
+        sync: false  # Set this as a secret in Render dashboard
+      - key: API_KEY
+        sync: false  # Set this as a secret in Render dashboard
+      - key: CHANNEL_PREFIX
+        value: teamstream
+      - key: CORS_ALLOWED_ORIGINS
+        value: "*"  # Update with your frontend domains
+    
+    # Health Check
+    healthCheckPath: /api/v1/health
+    
+    # Autoscaling (available on paid plans)
+    # autoDeploy: true
+    # numInstances: 1
+    
+    # Custom domains (configure in Render dashboard)
+    # domains:
+    #   - api.teamstream.com

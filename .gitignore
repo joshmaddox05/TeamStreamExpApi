@@ -47,3 +47,10 @@ application-dev.properties
 
 # Sensitive data (even though we have defaults in application.properties)
 **/application-secret.properties
+
+# Docker
+.dockerignore
+docker-compose.override.yml
+
+# Render
+.render/

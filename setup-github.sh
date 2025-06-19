@@ -1,0 +1,86 @@
+#!/bin/bash
+
+# TeamStream Experience API - GitHub Repository Setup Script
+# This script provides step-by-step instructions to create your GitHub repository
+
+echo "🚀 TeamStream Experience API - GitHub Setup"
+echo "============================================"
+echo ""
+
+echo "📋 Prerequisites:"
+echo "1. GitHub account created"
+echo "2. Git configured with your credentials"
+echo "3. GitHub CLI installed (optional but recommended)"
+echo ""
+
+echo "🔧 Step 1: Configure Git (if not already done)"
+echo "Run these commands to set your Git identity:"
+echo ""
+echo "git config --global user.name \"Your Name\""
+echo "git config --global user.email \"your.email@example.com\""
+echo ""
+
+echo "🌐 Step 2: Create GitHub Repository"
+echo "Option A - Using GitHub CLI (recommended):"
+echo "gh repo create TeamStreamExpApi --public --description \"Java Spring Boot API for live streaming with Agora SDK integration\""
+echo ""
+echo "Option B - Using GitHub Web Interface:"
+echo "1. Go to https://github.com/new"
+echo "2. Repository name: TeamStreamExpApi"
+echo "3. Description: Java Spring Boot API for live streaming with Agora SDK integration"
+echo "4. Set to Public (or Private if preferred)"
+echo "5. DO NOT initialize with README, .gitignore, or license (we already have these)"
+echo "6. Click 'Create repository'"
+echo ""
+
+echo "🔗 Step 3: Connect Local Repository to GitHub"
+echo "Replace 'yourusername' with your actual GitHub username:"
+echo ""
+echo "git remote add origin https://github.com/yourusername/TeamStreamExpApi.git"
+echo "git branch -M main"
+echo "git push -u origin main"
+echo ""
+
+echo "✅ Step 4: Verify Upload"
+echo "After pushing, verify your repository at:"
+echo "https://github.com/yourusername/TeamStreamExpApi"
+echo ""
+
+echo "🔒 Step 5: Set Up Repository Secrets (for CI/CD)"
+echo "Go to your repository > Settings > Secrets and variables > Actions"
+echo "Add these secrets if you plan to deploy:"
+echo "- AGORA_APP_ID: a111a0c2193f4ecaa04d6e74190f082d"
+echo "- AGORA_APP_CERTIFICATE: ae0634149a0747d1807db13fcdeca6ae" 
+echo "- API_KEY: your-production-api-key"
+echo ""
+
+echo "📝 Step 6: Update Repository Details"
+echo "In your GitHub repository settings, add:"
+echo "- Topics: java, spring-boot, agora, api, live-streaming, teamstream"
+echo "- Website: (if you have one)"
+echo "- Enable Issues and Wiki"
+echo ""
+
+echo "🎯 What's Included:"
+echo "✅ Complete Spring Boot application"
+echo "✅ Agora SDK integration"
+echo "✅ API documentation (README.md)"
+echo "✅ Contributing guidelines"
+echo "✅ Security policy"
+echo "✅ GitHub issue templates"
+echo "✅ CI/CD pipeline"
+echo "✅ MIT License"
+echo "✅ Automated testing"
+echo ""
+
+echo "🚀 Ready to Push!"
+echo "Your local repository is ready. Follow the steps above to create your GitHub repository."
+echo ""
+
+echo "Example complete workflow:"
+echo "1. gh repo create TeamStreamExpApi --public --description \"Java Spring Boot API for live streaming with Agora SDK integration\""
+echo "2. git remote add origin https://github.com/yourusername/TeamStreamExpApi.git"
+echo "3. git push -u origin main"
+echo ""
+
+echo "Need help? Check the documentation in README.md or open an issue after creating the repository."

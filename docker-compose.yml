@@ -1,0 +1,38 @@
+# Docker Compose for local development and testing
+version: '3.8'
+
+services:
+  teamstream-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - AGORA_APP_ID=a111a0c2193f4ecaa04d6e74190f082d
+      - AGORA_APP_CERTIFICATE=ae0634149a0747d1807db13fcdeca6ae
+      - API_KEY=teamstream-api-key-2025
+      - JAVA_OPTS=-Xmx512m -Xms256m
+    volumes:
+      # Mount logs directory for local development
+      - ./logs:/app/logs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/api/v1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    restart: unless-stopped
+
+  # Optional: Add nginx proxy for production-like setup
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - teamstream-api
+    profiles:
+      - production
