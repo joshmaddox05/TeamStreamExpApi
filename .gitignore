@@ -1,0 +1,49 @@
+# Build files
+build/
+!gradle/wrapper/gradle-wrapper.jar
+.gradle/
+bin/
+out/
+
+# IDE files
+.idea/
+.vscode/
+*.iws
+*.iml
+*.ipr
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Environment variables
+.env
+.env.local
+.env.production
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# Application specific
+application-local.properties
+application-dev.properties
+
+# Sensitive data (even though we have defaults in application.properties)
+**/application-secret.properties
